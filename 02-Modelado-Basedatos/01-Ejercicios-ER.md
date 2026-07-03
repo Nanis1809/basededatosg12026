@@ -16,7 +16,7 @@
 
 
 ## Resultado de Modelo E-R 
-![Hospital](c:\Users\mfern\Downloads\Ejercicio1.drawio.png)
+![Hospital](image-1.png)
 
 ## Modelo Relacional 
 ![Hospital](Diagrama1.drawio.png)
@@ -48,7 +48,9 @@
    - Determinar la participacion 
 
 ## Resultado de Modelo E-R 
-
+![Profesor](Diagrama2.png)
+## Modelo Relacional 
+![Profesor](Tabla2.drawio.png)
 
 
 3. Una escuela administra alumnos y materias 
@@ -70,8 +72,11 @@
   5. De cada inscrpcion se debe almacenar:
      - Fecha de inscrpcion 
      - Calificacion final 
+## Resultado de Modelo E-R 
+![Escuela](Diagrama3.png)
 
-[Escuela](../../Downloads/EJERC3.drawio.pdf)
+## Modelo Relacional 
+![Escuela](TablaEscuela.jpeg)
 
 
 4. Una empresa encargada de realizar venta de productos:
@@ -98,5 +103,66 @@
 8. El detalle de pedido no existe sin producto
 9. El detalle almacen cantidadd y precio de venta
 
-[Empresa](../../Downloads/EJERC4.drawio.pdf)
-      
+## Resultado de Modelo E-R 
+
+![Clientes](Diagrama4.png)      
+
+## Modelo Relacional 
+![Clientes](Tabla4.png)
+
+5. Una empresa administra departamentos, empleados, proyectos y dependientes
+
+>De cada departamento se almacena:
+  - Número de departamento
+  - Nombre del departamento
+  - Fecha de inicio del gerente
+  - Ubicación(es)
+
+>De cada empleado se almacena:
+ -Número de Seguro Social (SSN)
+  - Nombre
+  - Dirección
+  - Salario
+  - Sexo
+  - Fecha de nacimiento
+
+>De cada proyecto se almacena:
+  - Número de proyecto
+  - Nombre del proyecto
+  - Ubicación
+
+> De cada dependiente se almacena:
+  - Nombre
+  - Sexo
+  - Fecha de nacimiento
+  - Parentesco con el empleado
+
+> Reglas
+  - Cada departamento tiene un nombre y un número únicos.
+  - Cada departamento es administrado por un solo empleado.
+  - Un empleado puede administrar como máximo un departamento.
+  - Se almacena la fecha en que un empleado comenzó a administrar el departamento.
+  - Un departamento puede tener una o varias ubicaciones.
+  - Un departamento controla uno o varios proyectos.
+  - Cada proyecto pertenece a un solo departamento.
+  - Cada proyecto tiene un nombre y un número únicos, además de una sola ubicación.
+  - Todo empleado pertenece a un único departamento.
+  - Un departamento puede tener varios empleados.
+  - Un empleado puede trabajar en varios proyectos.
+  - Un proyecto puede tener varios empleados trabajando en él.
+  - De cada asignación de un empleado a un proyecto se almacena el número de horas trabajadas por semana.
+  - Cada empleado tiene un supervisor directo, quien también es un empleado.
+  - Un supervisor puede supervisar a varios empleados.
+  - Un empleado puede tener cero o varios dependientes.
+  - Cada dependiente pertenece a un solo empleado.
+
+## Resultado de Modelo E-R
+![Empresa](Ejercicio5.drawio.png)
+## Modelo Relacional
+![Empresa](Tablaejer5.1.drawio.png)
+![Empresa](Tablasejer5.2.drawio.png)
+
+6. Tarea
+## Resultado de Modelo E-R
+![Tarea](TareaEjercicio6.png)
+## Modelo Relacional
