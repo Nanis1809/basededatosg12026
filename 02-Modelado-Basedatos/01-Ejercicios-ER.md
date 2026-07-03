@@ -4,15 +4,17 @@
 
 ## De cada paciente se desea almacenar:
   -Algo que lo identifique 
-  -Nombre 
+
+  -Nombre
+
   -Fecha de Nacimiento 
 
 ## De un expediente medico se almacena:
   -Numero de Expediente 
-  -Fecha de Apertura
-  -Tipo de sangre 
 
-## Reglas de Negocio 
+  -Fecha de Apertura
+
+  -Tipo de sangre 
 
 
 ## Resultado de Modelo E-R 
@@ -166,3 +168,4 @@
 ## Resultado de Modelo E-R
 ![Tarea](TareaEjercicio6.png)
 ## Modelo Relacional
+![Tarea](Tabla6.jpeg)
