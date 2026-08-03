@@ -1,4 +1,5 @@
 # Base de Datos Escuela
+- Maria Fernanda Hernandez Santillan
 
 ## Diagrama Entidad-Relación
 ![escuela](image-3.png)
@@ -56,4 +57,4 @@ ON P.idProfesor = E.idProfesor;
 ![tablas](image-4.png)
 
 ## Diagrama sql 
-![diagrama2](image-5.png)
+![diagrama2](image-24.png)

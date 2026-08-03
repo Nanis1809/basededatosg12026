@@ -1,197 +1,113 @@
 /*=========================================
-    CREAR BASE DE DATOS
+    INSERTAR DATOS EN SUCURSAL
 =========================================*/
-USE master;
-GO
-
-IF DB_ID('Empresa') IS NOT NULL
-BEGIN
-    ALTER DATABASE Empresa
-    SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE Empresa;
-END
-GO
-
-CREATE DATABASE Empresa;
-GO
-
-USE Empresa;
-GO
-
-/*=========================================
-    TABLA PUESTO
-=========================================*/
-CREATE TABLE Puesto(
-    Clave INT PRIMARY KEY,
-    Nombre VARCHAR(100),
-    NivelJerarquico VARCHAR(50),
-    Salario DECIMAL(10,2),
-    SalarioNeto DECIMAL(10,2)
-);
-GO
-
-/*=========================================
-    TABLA DEPARTAMENTO
-=========================================*/
-CREATE TABLE Departamento(
-    ClaveDepto INT PRIMARY KEY,
-    Nombre VARCHAR(100),
-    Descripcion VARCHAR(200),
-    Ubicacion VARCHAR(100)
-);
-GO
-
-/*=========================================
-    TABLA SUCURSAL
-=========================================*/
-CREATE TABLE Sucursal(
-    Clave INT PRIMARY KEY,
-    Nombre VARCHAR(100),
-    Estado VARCHAR(100),
-    Ciudad VARCHAR(100)
-);
-GO
-
-/*=========================================
-    TABLA CAPACITACION
-=========================================*/
-CREATE TABLE Capacitacion(
-    Clave INT PRIMARY KEY,
-    Nombre VARCHAR(100)
-);
-GO
-
-/*=========================================
-    TABLA PROYECTO
-=========================================*/
-CREATE TABLE Proyecto(
-    Clave INT PRIMARY KEY,
-    FechaInicio DATE,
-    FechaTermino DATE,
-    Presupuesto DECIMAL(12,2),
-    ClaveSucursal INT,
-
-    CONSTRAINT FK_Proyecto_Sucursal
-    FOREIGN KEY (ClaveSucursal)
-    REFERENCES Sucursal(Clave)
-);
-GO
-
-/*=========================================
-    TABLA EMPLEADO
-=========================================*/
-CREATE TABLE Empleado(
-    Clave INT PRIMARY KEY,
-    NumeroEmp INT,
-    Nombre VARCHAR(100),
-    NumDomic VARCHAR(100),
-    CURP VARCHAR(18),
-    RFC VARCHAR(13),
-    Jefe INT NULL,
-    ClavePuesto INT,
-    ClaveDepto INT,
-
-    CONSTRAINT FK_Empleado_Jefe
-    FOREIGN KEY(Jefe)
-    REFERENCES Empleado(Clave),
-
-    CONSTRAINT FK_Empleado_Puesto
-    FOREIGN KEY(ClavePuesto)
-    REFERENCES Puesto(Clave),
-
-    CONSTRAINT FK_Empleado_Departamento
-    FOREIGN KEY(ClaveDepto)
-    REFERENCES Departamento(ClaveDepto)
-);
-GO
-
-/*=========================================
-    PARTICIPA
-=========================================*/
-CREATE TABLE Participa(
-    ClaveEmpleado INT,
-    ClaveProyecto INT,
-    Rol VARCHAR(100),
-    FechaAsignacion DATE,
-
-    PRIMARY KEY(ClaveEmpleado,ClaveProyecto),
-
-    CONSTRAINT FK_Participa_Empleado
-    FOREIGN KEY(ClaveEmpleado)
-    REFERENCES Empleado(Clave),
-
-    CONSTRAINT FK_Participa_Proyecto
-    FOREIGN KEY(ClaveProyecto)
-    REFERENCES Proyecto(Clave)
-);
-GO
-
-/*=========================================
-    ASISTE
-=========================================*/
-CREATE TABLE Asiste(
-    ClaveEmpleado INT,
-    ClaveCapacitacion INT,
-    Calificacion DECIMAL(5,2),
-    Status VARCHAR(50),
-
-    PRIMARY KEY(ClaveEmpleado,ClaveCapacitacion),
-
-    CONSTRAINT FK_Asiste_Empleado
-    FOREIGN KEY(ClaveEmpleado)
-    REFERENCES Empleado(Clave),
-
-    CONSTRAINT FK_Asiste_Capacitacion
-    FOREIGN KEY(ClaveCapacitacion)
-    REFERENCES Capacitacion(Clave)
-);
-GO
-/* PUESTOS */
-INSERT INTO Puesto VALUES
-(1,'Gerente','Alto',50000,45000),
-(2,'Analista','Medio',25000,22000),
-(3,'Programador','Operativo',20000,18000);
-
-/* DEPARTAMENTOS */
-INSERT INTO Departamento VALUES
-(1,'Sistemas','Área de TI','Edificio A'),
-(2,'Recursos Humanos','Personal','Edificio B');
-
-/* SUCURSALES */
 INSERT INTO Sucursal VALUES
-(1,'Sucursal Centro','Hidalgo','Tula'),
-(2,'Sucursal Norte','Querétaro','Querétaro');
+(1,'Sucursal Centro','Tula','Hidalgo','7731112233'),
+(2,'Sucursal Norte','Pachuca','Hidalgo','7712233445');
+GO
 
-/* CAPACITACIONES */
+/*=========================================
+    INSERTAR DATOS EN PUESTO
+=========================================*/
+INSERT INTO Puesto VALUES
+(1,'Gerente','Alto',30000,50000,1),
+(2,'Analista','Medio',18000,25000,1),
+(3,'Programador','Operativo',15000,22000,2);
+GO
+
+/*=========================================
+    INSERTAR DATOS EN DEPARTAMENTO
+=========================================*/
+INSERT INTO Departamento
+(ClaveDepto,Nombre,Presupuesto,Ubicacion,NumEmpJefe)
+VALUES
+(1,'Sistemas',250000,'Edificio A',NULL),
+(2,'Recursos Humanos',180000,'Edificio B',NULL);
+GO
+
+/*=========================================
+    INSERTAR DATOS EN EMPLEADO
+=========================================*/
+INSERT INTO Empleado VALUES
+(1,'HEPJ980101HDFRRN01','1998-01-01','Juan','Perez','Lopez',1,1,NULL),
+(2,'LOMA990202MDFRRN02','1999-02-02','Maria','Lopez','Alvarez',2,1,1),
+(3,'RUGC000303HDFRRN03','2000-03-03','Carlos','Ruiz','Garcia',3,2,1);
+GO
+
+/*=========================================
+    ASIGNAR JEFES A DEPARTAMENTO
+=========================================*/
+UPDATE Departamento
+SET NumEmpJefe=1
+WHERE ClaveDepto=1;
+
+UPDATE Departamento
+SET NumEmpJefe=3
+WHERE ClaveDepto=2;
+GO
+
+/*=========================================
+    INSERTAR DATOS EN CAPACITACION
+=========================================*/
 INSERT INTO Capacitacion VALUES
 (1,'SQL Server'),
-(2,'Java');
+(2,'Java'),
+(3,'Power BI');
+GO
 
-/* PROYECTOS */
+/*=========================================
+    INSERTAR DATOS EN ASISTIR
+=========================================*/
+INSERT INTO Asistir VALUES
+(2,1,'2026-08-01',95,'Aprobado'),
+(2,2,'2026-08-10',90,'Aprobado'),
+(3,3,'2026-08-15',88,'Aprobado');
+GO
+
+/*=========================================
+    INSERTAR DATOS EN PROYECTO
+=========================================*/
 INSERT INTO Proyecto VALUES
-(1,'2026-01-10','2026-06-30',150000,1),
-(2,'2026-03-01','2026-09-30',250000,2);
+(1,'Sistema Escolar',300000,'2026-01-10','2026-06-30'),
+(2,'Control Inventarios',200000,'2026-03-01','2026-09-30');
+GO
 
-/* EMPLEADOS */
-INSERT INTO Empleado VALUES
-(1,1001,'Juan Pérez','Calle 1','PEPJ900101HDFRRN01','PEPJ900101AB1',NULL,1,1),
-(2,1002,'Ana López','Calle 2','LOPA920202MDFRRN02','LOPA920202AB2',1,2,1),
-(3,1003,'Carlos Ruiz','Calle 3','RUIC930303HDFRRN03','RUIC930303AB3',1,3,2);
-
-/* PARTICIPA */
+/*=========================================
+    INSERTAR DATOS EN PARTICIPA
+=========================================*/
 INSERT INTO Participa VALUES
-(2,1,'Desarrollador','2026-01-15'),
-(3,2,'Tester','2026-03-05');
+(1,1,'Lider',40,'2026-01-15'),
+(2,1,'Programador',35,'2026-01-20'),
+(3,2,'Analista',40,'2026-03-10');
+GO
 
-/* ASISTE */
-INSERT INTO Asiste VALUES
-(2,1,95,'Aprobado'),
-(3,2,90,'Aprobado');
--- Empleados
-SELECT * FROM Empleado;
+/*=========================================
+    CONSULTAS
+=========================================*/
+
+-- Sucursales
+SELECT * FROM Sucursal;
+
+-- Puestos
+SELECT * FROM Puesto;
 
 -- Departamentos
 SELECT * FROM Departamento;
+
+-- Empleados
+SELECT * FROM Empleado;
+
+-- Capacitaciones
+SELECT * FROM Capacitacion;
+
+-- Asistencias
+SELECT * FROM Asistir;
+
+-- Proyectos
+SELECT * FROM Proyecto;
+
+-- Participaciones
+SELECT * FROM Participa;
 
 -- Empleados con su puesto
 SELECT
@@ -199,7 +115,7 @@ E.Nombre,
 P.Nombre AS Puesto
 FROM Empleado E
 INNER JOIN Puesto P
-ON E.ClavePuesto = P.Clave;
+ON E.ClavePuesto=P.Clave;
 
 -- Empleados con departamento
 SELECT
@@ -207,27 +123,35 @@ E.Nombre,
 D.Nombre AS Departamento
 FROM Empleado E
 INNER JOIN Departamento D
-ON E.ClaveDepto = D.ClaveDepto;
+ON E.ClaveDepto=D.ClaveDepto;
 
--- Participación en proyectos
+-- Puestos por sucursal
+SELECT
+P.Nombre,
+S.Nombre AS Sucursal
+FROM Puesto P
+INNER JOIN Sucursal S
+ON P.ClaveSucursal=S.Clave;
+
+-- Empleados en capacitación
 SELECT
 E.Nombre,
-PR.Clave AS Proyecto,
-PA.Rol
+C.NombreCapacitacion,
+A.Calificacion
+FROM Asistir A
+INNER JOIN Empleado E
+ON A.NumEmp=E.NumEmp
+INNER JOIN Capacitacion C
+ON A.ClaveCapacitacion=C.ClaveCapacitacion;
+
+-- Empleados participando en proyectos
+SELECT
+E.Nombre,
+PR.Nombre,
+PA.Rol,
+PA.Horas
 FROM Participa PA
 INNER JOIN Empleado E
-ON PA.ClaveEmpleado=E.Clave
+ON PA.NumEmp=E.NumEmp
 INNER JOIN Proyecto PR
 ON PA.ClaveProyecto=PR.Clave;
-
--- Capacitaciones
-SELECT
-E.Nombre,
-C.Nombre,
-A.Calificacion,
-A.Status
-FROM Asiste A
-INNER JOIN Empleado E
-ON A.ClaveEmpleado=E.Clave
-INNER JOIN Capacitacion C
-ON A.ClaveCapacitacion=C.Clave;
